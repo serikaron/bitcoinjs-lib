@@ -326,7 +326,7 @@ export class Psbt {
           `Requires single object with at least [script or address] and [value]`,
       );
     }
-    checkInputsForPartialSig(this.data.inputs, 'addOutput');
+    // checkInputsForPartialSig(this.data.inputs, 'addOutput');
     const { address } = outputData as any;
     if (typeof address === 'string') {
       const { network } = this.opts;
