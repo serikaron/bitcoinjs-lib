@@ -1,4 +1,6 @@
-import * as tools from 'uint8array-tools';
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
+exports.getEccLib = exports.initEccLib = void 0;
 const _ECCLIB_CACHE = {};
 /**
  * Initializes the ECC library with the provided instance.
@@ -8,7 +10,7 @@ const _ECCLIB_CACHE = {};
  * @param eccLib The instance of the ECC library to initialize.
  * @param opts Extra initialization options. Use {DANGER_DO_NOT_VERIFY_ECCLIB:true} if ecc verification should not be executed. Not recommended!
  */
-export function initEccLib(eccLib, opts) {
+function initEccLib(eccLib, opts) {
   if (!eccLib) {
     // allow clearing the library
     _ECCLIB_CACHE.eccLib = eccLib;
@@ -19,6 +21,7 @@ export function initEccLib(eccLib, opts) {
     _ECCLIB_CACHE.eccLib = eccLib;
   }
 }
+exports.initEccLib = initEccLib;
 /**
  * Retrieves the ECC Library instance.
  * Throws an error if the ECC Library is not provided.
@@ -26,14 +29,15 @@ export function initEccLib(eccLib, opts) {
  * @returns The ECC Library instance.
  * @throws Error if the ECC Library is not provided.
  */
-export function getEccLib() {
+function getEccLib() {
   if (!_ECCLIB_CACHE.eccLib)
     throw new Error(
       'No ECC Library provided. You must call initEccLib() with a valid TinySecp256k1Interface instance',
     );
   return _ECCLIB_CACHE.eccLib;
 }
-const h = hex => tools.fromHex(hex);
+exports.getEccLib = getEccLib;
+const h = hex => Buffer.from(hex, 'hex');
 /**
  * Verifies the ECC functionality.
  *
@@ -79,7 +83,7 @@ function verifyEcc(ecc) {
     } else {
       assert(r !== null);
       assert(r.parity === t.parity);
-      assert(tools.compare(r.xOnlyPubkey, h(t.result)) === 0);
+      assert(Buffer.from(r.xOnlyPubkey).equals(h(t.result)));
     }
   });
 }

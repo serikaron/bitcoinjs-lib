@@ -294,7 +294,7 @@ export class Psbt {
       );
     }
     checkTaprootInputFields(inputData, inputData, 'addInput');
-    checkInputsForPartialSig(this.data.inputs, 'addInput');
+    // checkInputsForPartialSig(this.data.inputs, 'addInput');
     if (inputData.witnessScript) checkInvalidP2WSH(inputData.witnessScript);
     const c = this.__CACHE;
     this.data.addInput(inputData);
